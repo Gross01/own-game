@@ -1,0 +1,26 @@
+.div {
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+}
+
+.p {
+    font-size: 3rem;
+    margin-top: -40px;
+}
+
+.pac {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    border-radius: 15px;
+    align-items: center;
+} 
+
+.download {
+    font-size: 25px;
+}
+

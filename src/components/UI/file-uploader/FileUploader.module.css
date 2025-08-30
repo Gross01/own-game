@@ -1,0 +1,50 @@
+.form {
+    border: 2px dashed white;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.form:hover {
+    opacity: .7;
+}
+
+.dragHere {
+    font-size: 20px;
+}
+
+.label {
+    text-align: center;
+}
+
+.label span {
+    display: inline-block;
+    padding: 10px;
+    background: rgb(75, 75, 99);
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.label input {
+    margin: 0;
+    padding: 0;
+    width: 0;
+    height: 0;
+    visibility: hidden;
+}
+
+.fileName {
+    display: block;
+    margin-top: 10px;
+    font-size: 15px;
+    text-align: center;
+}
+
+.drag {
+    border: 2px dashed blueviolet;
+    opacity: .8;
+}
