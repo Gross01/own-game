@@ -14,6 +14,7 @@ type TWsActions<T> = {
 export const socketMiddleware = <T>(wsActions: TWsActions<T>): Middleware<unknown, RootStore> => {
     return (store) => {
         let socket: WebSocket | null = null
+        let connected = false
         const {dispatch} = store
         const {
             wsConnect,
@@ -27,9 +28,13 @@ export const socketMiddleware = <T>(wsActions: TWsActions<T>): Middleware<unknow
 
         return (next) => (action) => {
             if (wsConnect.match(action)) {
+
+                if (socket) return 
+
                 socket = new WebSocket(action.payload)
 
                 socket.onopen = () => {
+                    connected = true
                     dispatch(onOpen())
                 }
 
@@ -50,13 +55,16 @@ export const socketMiddleware = <T>(wsActions: TWsActions<T>): Middleware<unknow
                 }
 
                 socket.onclose = () => {
-                    dispatch(onClose())
+                    if (connected) {
+                        dispatch(onClose())
+                    }
+                    socket = null
+                    connected = false
                 }
             }
 
             if (socket && wsDisconnect.match(action)) {
                 socket.close()
-                socket = null
             }
 
             if (socket && wsSend && wsSend.match(action)) {

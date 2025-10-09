@@ -2,11 +2,21 @@
 import Preloader from './../UI/preloader/Preloader';
 import styles from './Player.module.css'
 import Button from '../UI/button/Button'
-import { useState } from 'react';
+import { useDispatch, useSelector } from '../../services/store';
+import { wsSend } from '../../services/room-info/actions';
 
 function Player() {
 
-  const [playerIsReady, setPlayerIsReady] = useState(false)
+  const dispatch = useDispatch()
+  const playerIsReady = useSelector(state => state.roomInfo.playerIsReady)
+
+  const statusHandler = () => {
+    if (playerIsReady) {
+      dispatch(wsSend({event: "player_unready"}))
+    } else {
+      dispatch(wsSend({event: "player_ready"}))
+    }
+  }
 
   return (
       <div className={styles.div}>
@@ -15,7 +25,7 @@ function Player() {
         <div>
           <Preloader />
         </div>
-        <Button style={{marginTop: '25px'}} onClick={() => setPlayerIsReady(prev => !prev)}>{playerIsReady ? 'Отменить готовность' : 'Готов'}</Button>
+        <Button style={{marginTop: '25px'}} onClick={statusHandler}>{playerIsReady ? 'Отменить готовность' : 'Готов'}</Button>
 
       </div>
   );

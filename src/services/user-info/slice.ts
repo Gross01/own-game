@@ -1,12 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 type TInitialState = {
-    name: string | null;
     role: null | 'lead' | 'player' | 'screen';
 }
 
 const initialState: TInitialState = {
-    name: null,
     role: null,
 }
 

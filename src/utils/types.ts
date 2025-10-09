@@ -1,4 +1,6 @@
 export type TPlayer = {
-    name: string,
-    role: boolean,
+    userName?: string,
+    isLeader: boolean,
+    userGiud: string,
+    playerIsReady: boolean
 }

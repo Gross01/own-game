@@ -3,28 +3,22 @@ import Button from '../../components/UI/button/Button';
 import styles from './Home.module.css'
 import { setRole } from '../../services/user-info/slice';
 import { useDispatch, useSelector } from '../../services/store';
-import { useEffect, useState } from 'react';
+import { useEffect} from 'react';
 import Preloader from '../../components/UI/preloader/Preloader';
-import { wsConnect, wsSend } from '../../services/room-info/actions';
+import { createRoom } from '../../services/room-info/thunk';
 
 function Home() {
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const code = useSelector(store => store.roomInfo.roomCode)
-  const connected = useSelector(store => store.roomInfo.connected)
-  const [sendRequest, setSendRequest] = useState(false)
+  const loading = useSelector(store => store.roomInfo.createRoomLoading)
 
   useEffect(() => {
-    if (connected && !code) {
-      dispatch(wsSend('1'))
+    if (code) {
+      navigate(`/room/${code}`)
     }
-
-    if (connected && code && sendRequest) {
-        navigate(`/room/${code}`) 
-        setSendRequest(false)
-    }
-  }, [code, navigate, sendRequest, connected, dispatch])
+  }, [code, navigate])
 
   const leadButton = () => {
     navigate('/auth')
@@ -37,13 +31,12 @@ function Home() {
   }
 
   const screenButton = () => {
-    dispatch(wsConnect('wss://ws.postman-echo.com/raw'))
     dispatch(setRole('screen'))
-    setSendRequest(true)
+    dispatch(createRoom())
   }
 
-  if (sendRequest) {
-      return <Preloader />
+  if (loading) {
+    return <Preloader />
   }
 
   return (
