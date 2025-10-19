@@ -26,6 +26,13 @@
   min-width: 365px;
 }
 
+@media screen and (max-width: 600px) { 
+    .card {
+        background-color: transparent;
+        box-shadow: none;
+    }
+}
+
 .section {
   display: flex;
   flex-direction: column;
@@ -90,3 +97,4 @@
 .select:focus {
     outline: none;
 }
+

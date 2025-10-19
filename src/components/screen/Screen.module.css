@@ -10,6 +10,13 @@
     margin-top: -40px;
 }
 
+@media screen and (max-width: 600px) { 
+    .p {
+        font-size: 1.9rem;
+        text-align: center;
+    }
+}
+
 .wait {
     font-size: 1.2rem;
     opacity: .6;

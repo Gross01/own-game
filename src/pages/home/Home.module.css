@@ -19,3 +19,16 @@
     display: flex;
     gap: 20px;
 }
+
+
+@media screen and (max-width: 600px) {
+    .title {
+        font-size: 4rem;
+    }
+
+    .buttons {
+        gap: 12px;
+        flex-direction: column;
+        margin-top: 3em;
+    }
+}
