@@ -21,7 +21,7 @@ function Player() {
   return (
       <div className={styles.div}>
         <p className={styles.p}>Вы присоединились к игре!</p>
-        <span className={styles.wait}>Ожидаем других игроков... <br/> Готовы 2/5</span>
+        <span className={styles.wait}>Ожидаем других игроков...</span>
         <div>
           <Preloader />
         </div>

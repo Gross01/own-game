@@ -8,6 +8,7 @@ import { wsConnect, wsDisconnect } from "../../services/room-info/actions";
 import { SOCKET_BASE_URL } from "../../utils/constants";
 import Cookies from "js-cookie";
 import Preloader from "../../components/UI/preloader/Preloader";
+import { clearRole } from "../../services/user-info/slice";
 
 const Room = () => {
     const role = useSelector(store => store.userInfo.role)
@@ -17,10 +18,15 @@ const Room = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        dispatch(wsConnect(`${SOCKET_BASE_URL}/${userGuid}`))
+        if (!socketConnected) {
+            dispatch(wsConnect(`${SOCKET_BASE_URL}/${userGuid}`))
+        }
 
         return () => {
             dispatch(wsDisconnect());
+            if (role === 'screen') {
+                dispatch(clearRole())
+            }
         };
     }, [])
 

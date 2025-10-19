@@ -3,7 +3,7 @@ import styles from './Screen.module.css'
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "../../services/store";
 import { wsDisconnect } from "../../services/room-info/actions";
-
+import { clearRoomCode } from "../../services/room-info/slice";
 
 function Screen() {
 
@@ -14,6 +14,7 @@ function Screen() {
   useEffect(() => {
     return () => {
       dispatch(wsDisconnect())
+      dispatch(clearRoomCode())
     }
   }, [dispatch])
 

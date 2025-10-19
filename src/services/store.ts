@@ -4,6 +4,7 @@ import { userInfoSlice } from "./user-info/slice";
 import { roomInfoSlice } from "./room-info/slice";
 import { socketMiddleware } from "./middleware/socket-middleware";
 import { onClose, onError, onMessage, onOpen, wsConnect, wsDisconnect, wsSend } from "./room-info/actions";
+import { roleMiddleware } from "./middleware/role-middleware";
 
 const rootReducer = combineReducers({
     userInfo: userInfoSlice.reducer,
@@ -23,7 +24,7 @@ const roomInfoMiddleware = socketMiddleware({
 export const store = configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) => {
-        return getDefaultMiddleware().concat(roomInfoMiddleware)
+        return getDefaultMiddleware().concat(roomInfoMiddleware, roleMiddleware)
     }
 })
 

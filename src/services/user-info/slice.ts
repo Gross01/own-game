@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 type TInitialState = {
-    role: null | 'lead' | 'player' | 'screen';
+    role: null | string;
 }
 
 const initialState: TInitialState = {
-    role: null,
+    role: localStorage.getItem('role') || null,
 }
 
 export const userInfoSlice = createSlice({
@@ -14,8 +14,11 @@ export const userInfoSlice = createSlice({
     reducers: {
         setRole: (state, action) => {
             state.role = action.payload
+        },
+        clearRole: (state) => {
+            state.role = null
         }
     },
 })
 
-export const {setRole} = userInfoSlice.actions
+export const {setRole, clearRole} = userInfoSlice.actions

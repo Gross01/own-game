@@ -26,7 +26,11 @@ const initialState: TInitialState = {
 export const roomInfoSlice = createSlice({
     name: 'roomInfo',
     initialState,
-    reducers: {},
+    reducers: {
+        clearRoomCode: (state) => {
+            state.roomCode = null
+        }
+    },
     extraReducers: builder => {
         builder
             //socket
@@ -52,6 +56,10 @@ export const roomInfoSlice = createSlice({
                     if (!action.payload.is_leader && !action.payload.user_name) {
                         return 
                     }
+
+                    const findPlayer = state.players.find(player => player.userGiud === action.payload.user_GUID)
+
+                    if (findPlayer) return
 
                     const newPlayer = {
                         isLeader: Boolean(action.payload.is_leader),
@@ -82,6 +90,7 @@ export const roomInfoSlice = createSlice({
                 state.createRoomLoading = true
             })
             .addCase(createRoom.fulfilled, (state, action) => {
+                console.log(action.payload)
                 state.roomCode = action.payload
                 state.createRoomLoading = false
             })
@@ -91,3 +100,5 @@ export const roomInfoSlice = createSlice({
             })
     }
 })
+
+export const {clearRoomCode} = roomInfoSlice.actions
