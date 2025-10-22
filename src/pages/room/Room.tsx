@@ -9,10 +9,12 @@ import { SOCKET_BASE_URL } from "../../utils/constants";
 import Cookies from "js-cookie";
 import Preloader from "../../components/UI/preloader/Preloader";
 import { clearRole } from "../../services/user-info/slice";
+import { clearSocketError } from "../../services/room-info/slice";
 
 const Room = () => {
     const role = useSelector(store => store.userInfo.role)
     const socketConnected = useSelector(store => store.roomInfo.socketConnected)
+    const socketError = useSelector(store => store.roomInfo.socketError)
     const userGuid = Cookies.get('user_GUID')
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -22,13 +24,18 @@ const Room = () => {
             dispatch(wsConnect(`${SOCKET_BASE_URL}/${userGuid}`))
         }
 
+        if (socketError) {
+            dispatch(clearSocketError())
+            console.log(1)
+        }
+
         return () => {
             dispatch(wsDisconnect());
             if (role === 'screen') {
                 dispatch(clearRole())
             }
         };
-    }, [])
+    }, [socketError, navigate])
 
     useEffect(() => {
         if (!role) {

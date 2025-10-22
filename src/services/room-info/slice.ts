@@ -29,6 +29,9 @@ export const roomInfoSlice = createSlice({
     reducers: {
         clearRoomCode: (state) => {
             state.roomCode = null
+        },
+        clearSocketError: (state) => {
+            state.socketError = null
         }
     },
     extraReducers: builder => {
@@ -71,6 +74,11 @@ export const roomInfoSlice = createSlice({
                     state.players = [...state.players, newPlayer]
                 }
 
+                if (action.payload.event === 'user_disconnected') { 
+                    console.log(12)
+                    state.players = state.players.filter(player => player.userGiud !== action.payload.user_GUID)
+                }   
+
                 if (action.payload.event === 'player_ready') {
                     const player = state.players.find(player => player.userGiud === action.payload.user_GUID)
                     if (player) {
@@ -83,6 +91,10 @@ export const roomInfoSlice = createSlice({
                     if (player) {
                         player.playerIsReady = false
                     }
+                }
+
+                if (action.payload['user_ready'] === true) {
+                    state.playerIsReady = true
                 }
             })
             // post запрос
@@ -101,4 +113,4 @@ export const roomInfoSlice = createSlice({
     }
 })
 
-export const {clearRoomCode} = roomInfoSlice.actions
+export const {clearRoomCode, clearSocketError} = roomInfoSlice.actions
