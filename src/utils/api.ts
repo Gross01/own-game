@@ -27,6 +27,10 @@ export const createPlayer = async (body: PlayerBody | LeaderBody) => {
 
             const data = await response.json() 
 
+            if (data.error) {
+                return data
+            }
+
             const userGuid = data['user_GUID']
 
             Cookies.set('user_GUID', userGuid, {expires: 1})

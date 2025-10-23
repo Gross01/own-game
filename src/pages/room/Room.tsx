@@ -26,7 +26,6 @@ const Room = () => {
 
         if (socketError) {
             dispatch(clearSocketError())
-            console.log(1)
         }
 
         return () => {

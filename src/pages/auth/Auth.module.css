@@ -25,6 +25,7 @@
 }
 
 .code {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -36,4 +37,14 @@
 
 .input::placeholder {
     font-size: 20px;
+}
+
+.nameError {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
+    color: indianred;
+    font-size: large;
 }
