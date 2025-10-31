@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import Cookies from 'js-cookie'
 import { BASE_URL } from "../../utils/constants";
 
-export const createRoom = createAsyncThunk(
+export const createRoom = createAsyncThunk<string>(
     'roomInfo/createRoom',
     async (_, thunkAPI) => {
         try{

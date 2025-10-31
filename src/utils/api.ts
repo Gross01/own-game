@@ -11,7 +11,7 @@ type LeaderBody = {
     game_code: string
 }
 
-export const createPlayer = async (body: PlayerBody | LeaderBody) => {
+export const createPlayer = async (body: PlayerBody | LeaderBody): Promise<string> => {
         try{
             const response = await fetch(`${BASE_URL}/creategame`, {
                 method: 'POST',

@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "../../services/store";
 import { wsDisconnect } from "../../services/room-info/actions";
 import { clearRoomCode } from "../../services/room-info/slice";
+import PlayerIcon from "../UI/playerIcon/PlayerIcon";
 
 function Screen() {
 
@@ -24,12 +25,7 @@ function Screen() {
       <span className={styles.wait}>Ожидаем игроков...</span>
       <ul className={styles.ul}>
         {players.map((player, i) => {
-          return <li className={styles.player} key={i + 1}>
-              <div>{player.userName ? player.userName[0].toUpperCase() : ''}</div>
-              <span className={styles.name}>{player.userName}</span>
-              {!player.isLeader && 
-              <span style={{color: player.playerIsReady ? '#30B386' : '#E2C95F'}} className={styles.readiness}>{player.playerIsReady ? 'Готов' : 'Ожидание'}</span>}
-          </li>
+          return <PlayerIcon player={player} key={i + 1}/>
         })}
       </ul>
     </div>

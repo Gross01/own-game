@@ -87,7 +87,6 @@ export const roomInfoSlice = createSlice({
                 }
 
                 if (action.payload.event === 'user_disconnected') { 
-                    console.log(12)
                     state.players = state.players.filter(player => player.userGiud !== action.payload.user_GUID)
                 }   
 
