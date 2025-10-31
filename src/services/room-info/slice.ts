@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { TPlayer } from "../../utils/types";
-import {onClose, onError, onMessage, onOpen, wsDisconnect} from './actions'
+import { TPlayer, TResPlayer } from "../../utils/types";
+import {onClose, onError, onMessage, onOpen} from './actions'
 import { createRoom } from "./thunk";
 
 type TInitialState = {
@@ -56,6 +56,18 @@ export const roomInfoSlice = createSlice({
                 }
 
                 if (action.payload.event === 'user_connect') {
+
+                    if (action.payload.players_info) {
+                        state.players = action.payload.players_info.map((player: TResPlayer) => {
+                            return {
+                                userName: player.user_name,
+                                isLeader: player.is_leader,
+                                userGiud: player.user_GUID,
+                                playerIsReady: player.player_ready
+                            }
+                        })
+                    }
+
                     if (!action.payload.is_leader && !action.payload.user_name) {
                         return 
                     }
@@ -68,7 +80,7 @@ export const roomInfoSlice = createSlice({
                         isLeader: Boolean(action.payload.is_leader),
                         userGiud: action.payload.user_GUID,
                         userName: action.payload.is_leader ? 'Ведущий' :  action.payload.user_name,
-                        playerIsReady: false,
+                        playerIsReady: action.payload.user_ready,
                     }
 
                     state.players = [...state.players, newPlayer]

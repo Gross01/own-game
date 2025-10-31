@@ -12,6 +12,7 @@ function Auth() {
   const [userName, setUserName] = useState('')
   const [borderColor, setBorderColor] = useState<'white' | 'red'>('white')
   const [showNameError, setShowNameError] = useState(false)
+  const [showLeadError, setShowLeadError] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<boolean>(false)
   const role = useSelector(state => state.userInfo.role)
@@ -25,17 +26,19 @@ function Auth() {
         : { user_name: userName, game_code: code };
 
     createPlayer(payload)
-      .then((res) => {
-
-        if (res.error) {
-          setShowNameError(true)
-          return 
-        }
-
+      .then(() => {
         navigate(`/room/${code}`)
       })
       .catch((e) => {
-        console.log(e);
+        console.log(e.message, 12);
+        if (e.message === 'имя игрока дублируется') {
+          setShowNameError(true)
+          return 
+        }
+        if (e.message === 'ведущий только один') {
+          setShowLeadError(true)
+          return 
+        }
         setBorderColor("red");
         setError(true)
       })
@@ -81,9 +84,13 @@ function Auth() {
                   type="text" 
                   name="ver-code" 
                   value={code ?? ''} 
-                  onChange={(e) => setCode(e.target.value)}
+                  onChange={(e) => {
+                    setCode(e.target.value)
+                    setShowLeadError(false)
+                  }}
                   placeholder='Код сессии'
             />
+            {showLeadError && <p className={styles.nameError}>В комнате уже есть ведущий</p>}
             <Button onClick={onClick} extraClass={styles.button}>Отправить</Button>
         </div>
     </div>

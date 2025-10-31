@@ -5,7 +5,7 @@ export const wsConnect = createAction<wsConnectPayload>('roomInfo/wsConnect')
 
 export const wsDisconnect = createAction('roomInfo/wsDisconnect')
 
-type wsSendPayload = any
+type wsSendPayload = string
 export const wsSend = createAction<wsSendPayload>('roomInfo/wsSend')
 
 export const onOpen = createAction('roomInfo/onOpen')

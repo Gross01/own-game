@@ -20,17 +20,13 @@ export const createPlayer = async (body: PlayerBody | LeaderBody) => {
                 },
                 body: JSON.stringify(body)
             })
-            
-            if (!response.ok) {
-                throw new Error('Ошибка загрузки')
-            }
 
             const data = await response.json() 
-
-            if (data.error) {
-                return data
+            
+            if (!response.ok) {
+                throw new Error(data.error || 'ошибка загрузки')
             }
-
+        
             const userGuid = data['user_GUID']
 
             Cookies.set('user_GUID', userGuid, {expires: 1})
@@ -41,3 +37,7 @@ export const createPlayer = async (body: PlayerBody | LeaderBody) => {
             throw e
         }
 }
+
+
+
+

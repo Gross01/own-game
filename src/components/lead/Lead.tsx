@@ -11,7 +11,6 @@ function Lead() {
       <p className={styles.title}>Настройки сессии</p>
 
       <div className={styles.card}>
-        {/* Источник пакета */}
         <div className={styles.section}>
           <p className={styles.label}>Источник пакета вопросов:</p>
 
