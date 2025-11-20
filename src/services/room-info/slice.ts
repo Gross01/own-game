@@ -51,7 +51,7 @@ export const roomInfoSlice = createSlice({
             })
             .addCase(onMessage, (state, action) => {
                 console.log(action.payload)
-                if (action.payload.status === 'success') {
+                if (action.payload.event === 'player_ready' || action.payload.event === 'player_unready') {
                     state.playerIsReady = !state.playerIsReady
                 }
 

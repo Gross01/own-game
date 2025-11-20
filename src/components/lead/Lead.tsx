@@ -2,9 +2,11 @@ import { useState } from "react";
 import Button from "../UI/button/Button";
 import FileUploader from "../UI/file-uploader/FileUploader";
 import styles from "./Lead.module.css";
+import { useSelector } from "../../services/store";
 
 function Lead() {
   const [mode, setMode] = useState("preset");
+  const players = useSelector(store => store.roomInfo.players).filter(player => !player.isLeader)
 
   return (
     <div className={styles.wrapper}>
@@ -65,19 +67,13 @@ function Lead() {
           <p className={styles.label}>Дополнительные настройки:</p>
 
           <div className={styles.row}>
-            <span>Количество игроков:</span>
-            <input type="number" min="2" max="8" defaultValue="4" />
+            <span>Первый ход делает:</span>
+            <select className={styles.select}>
+              {players.map(player => {
+                return <option value={player.userGiud} key={player.userGiud}>{player.userName}</option>
+              })}
+            </select>
           </div>
-
-          <div className={styles.row}>
-            <span>Время на ответ (сек):</span>
-            <input type="number" min="10" max="120" defaultValue="30" />
-          </div>
-
-          <label className={styles.row}>
-            <span>Показывать подсказки:</span>
-            <input type="checkbox" defaultChecked />
-          </label>
         </div>
 
         <Button>Начать игру</Button>
